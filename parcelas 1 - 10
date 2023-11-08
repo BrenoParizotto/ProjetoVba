@@ -1,0 +1,206 @@
+Private Sub CommandButton1_Click()
+
+
+        If TextBox24.Value = "" Or TextBox25.Value = "" Or TextBox23.Value = "" Or TextBox22.Value = "" Or TextBox27.Value = "" Or TextBox28.Value = "" Or TextBox6.Value = "" Or TextBox7.Value = "" Or TextBox17.Value = "" Or TextBox16.Value = "" Or TextBox15.Value = "" Or TextBox11.Value = "" Or TextBox12.Value = "" Or TextBox14.Value = "" Or TextBox13.Value = "" Or TextBox19.Value = "" Or TextBox18.Value = "" Or TextBox20.Value = "" Or TextBox21.Value = "" Then
+        MsgBox "Preencha todos os campos acima", vbCritical, ""
+        Exit Sub
+        End If
+    Dim campo4 As Double
+    Dim campo2 As Double
+    Dim campo1 As Double
+    Dim campo3 As Double
+    Dim campo5 As Double
+    Dim campo6 As Double
+     Dim campo7 As Double
+     Dim campo8 As Double
+       Dim campo9 As Double
+     Dim campo10 As Double
+     
+      campo10 = CDbl(ValorParcelas10.TextBox27.Value)
+     campo9 = CDbl(ValorParcelas10.TextBox24.Value)
+    campo8 = CDbl(ValorParcelas10.TextBox22.Value)
+    campo2 = CDbl(ValorParcelas10.TextBox16.Value)
+    campo1 = CDbl(ValorParcelas10.TextBox7.Value)
+    campo3 = CDbl(ValorParcelas10.TextBox25.Value)
+    campo4 = CDbl(ValorParcelas10.TextBox11.Value)
+    campo5 = CDbl(ValorParcelas10.TextBox13.Value)
+    campo6 = CDbl(ValorParcelas10.TextBox18.Value)
+    campo7 = CDbl(ValorParcelas10.TextBox20.Value)
+    
+    
+    Dim total As Double
+    total = CDbl(cadastroProvisionamento.TextBox3.Value)
+    
+    Dim diferenca As Double
+    diferenca = campo10 + campo9 + campo8 + campo7 + campo6 + campo1 + campo2 + campo3 + campo4 + campo5 - total
+    
+    If campo10 + campo9 + campo8 + campo6 + campo1 + campo7 + campo2 + campo3 + campo4 + campo5 <> total Then
+        MsgBox "Os valores das parcelas não correspondem ao total da cota. Diferença de R$: " & diferenca, vbExclamation, ""
+        Exit Sub
+    End If
+    
+    Call cadastrarParcela
+    cadastroProvisionamento.Label9.Visible = True
+    cadastroProvisionamento.Label15.Visible = False
+End Sub
+Private Sub TextBox27_Change()
+    Call Att
+End Sub
+Private Sub TextBox25_Change()
+    Call Att
+End Sub
+Private Sub TextBox7_Change()
+    Call Att
+End Sub
+Private Sub TextBox13_Change()
+    Call Att
+End Sub
+Private Sub TextBox11_Change()
+    Call Att
+End Sub
+Private Sub TextBox16_Change()
+    Call Att
+End Sub
+Private Sub TextBox18_Change()
+    Call Att
+End Sub
+Private Sub TextBox20_Change()
+    Call Att
+End Sub
+Private Sub TextBox22_Change()
+    Call Att
+End Sub
+Private Sub TextBox24_Change()
+    Call Att
+End Sub
+
+Sub Att()
+    If IsNumeric(TextBox24.Value) And IsNumeric(TextBox27.Value) And IsNumeric(TextBox13.Value) And IsNumeric(TextBox7.Value) And IsNumeric(TextBox20.Value) And IsNumeric(TextBox22.Value) And IsNumeric(TextBox25.Value) And IsNumeric(TextBox11.Value) And IsNumeric(TextBox16.Value) And IsNumeric(TextBox18.Value) Then
+        Dim campo1 As Double
+        Dim campo2 As Double
+        Dim campo3 As Double
+        Dim campo4 As Double
+        Dim campo5 As Double
+        Dim campo6 As Double
+        Dim campo7 As Double
+        Dim campo8 As Double
+        Dim campo9 As Double
+        Dim campo10 As Double
+        
+        campo10 = CDbl(TextBox27.Value)
+        campo9 = CDbl(TextBox24.Value)
+        campo8 = CDbl(TextBox22.Value)
+        campo1 = CDbl(TextBox25.Value)
+        campo2 = CDbl(TextBox7.Value)
+        campo3 = CDbl(TextBox13.Value)
+        campo4 = CDbl(TextBox11.Value)
+        campo5 = CDbl(TextBox16.Value)
+        campo6 = CDbl(TextBox18.Value)
+        campo7 = CDbl(TextBox20.Value)
+
+        
+        TextBox5.Value = campo10 + campo9 + campo1 + campo2 + campo3 + campo4 + campo5 + campo6 + campo7 + campo8
+        
+    End If
+End Sub
+
+Sub cadastrarParcela()
+    Dim ws As Worksheet
+    Dim i As Long
+    Set ws = ThisWorkbook.Sheets("BasePagamentos")
+    Dim lastRow As Long
+    
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+
+ 
+    ws.Cells(lastRow, 5).Value = 10
+    ws.Cells(lastRow, 8).Value = TextBox17.Value
+    ws.Cells(lastRow, 7).Value = TextBox16.Value
+    ws.Cells(lastRow, 11).Value = 1
+    ws.Cells(lastRow, 12).Value = "PENDENTE"
+
+    lastRow = lastRow + 1
+    
+    ws.Cells(lastRow, 5).Value = 10
+    ws.Cells(lastRow, 8).Value = TextBox15.Value
+    ws.Cells(lastRow, 7).Value = TextBox7.Value
+    ws.Cells(lastRow, 11).Value = 2
+    ws.Cells(lastRow, 12).Value = "PENDENTE"
+    
+    lastRow = lastRow + 1
+
+    
+    ws.Cells(lastRow, 5).Value = 10
+    ws.Cells(lastRow, 8).Value = TextBox6.Value
+    ws.Cells(lastRow, 7).Value = TextBox25.Value
+    ws.Cells(lastRow, 11).Value = 3
+    ws.Cells(lastRow, 12).Value = "PENDENTE"
+    
+     lastRow = lastRow + 1
+
+    
+    ws.Cells(lastRow, 5).Value = 10
+    ws.Cells(lastRow, 8).Value = TextBox12.Value
+    ws.Cells(lastRow, 7).Value = TextBox11.Value
+    ws.Cells(lastRow, 11).Value = 4
+    ws.Cells(lastRow, 12).Value = "PENDENTE"
+    
+     lastRow = lastRow + 1
+
+    
+    ws.Cells(lastRow, 5).Value = 10
+    ws.Cells(lastRow, 8).Value = TextBox14.Value
+    ws.Cells(lastRow, 7).Value = TextBox13.Value
+    ws.Cells(lastRow, 11).Value = 5
+    ws.Cells(lastRow, 12).Value = "PENDENTE"
+    
+     lastRow = lastRow + 1
+
+    
+    ws.Cells(lastRow, 5).Value = 10
+    ws.Cells(lastRow, 8).Value = TextBox19.Value
+    ws.Cells(lastRow, 7).Value = TextBox18.Value
+    ws.Cells(lastRow, 11).Value = 6
+    ws.Cells(lastRow, 12).Value = "PENDENTE"
+    
+    lastRow = lastRow + 1
+
+    
+    ws.Cells(lastRow, 5).Value = 10
+    ws.Cells(lastRow, 8).Value = TextBox21.Value
+    ws.Cells(lastRow, 7).Value = TextBox20.Value
+    ws.Cells(lastRow, 11).Value = 7
+    ws.Cells(lastRow, 12).Value = "PENDENTE"
+    
+    lastRow = lastRow + 1
+
+    
+    ws.Cells(lastRow, 5).Value = 10
+    ws.Cells(lastRow, 8).Value = TextBox23.Value
+    ws.Cells(lastRow, 7).Value = TextBox22.Value
+    ws.Cells(lastRow, 11).Value = 8
+    ws.Cells(lastRow, 12).Value = "PENDENTE"
+  
+      lastRow = lastRow + 1
+
+    
+    ws.Cells(lastRow, 5).Value = 10
+    ws.Cells(lastRow, 8).Value = TextBox26.Value
+    ws.Cells(lastRow, 7).Value = TextBox24.Value
+    ws.Cells(lastRow, 11).Value = 9
+    ws.Cells(lastRow, 12).Value = "PENDENTE"
+    
+    lastRow = lastRow + 1
+
+    
+    ws.Cells(lastRow, 5).Value = 10
+    ws.Cells(lastRow, 8).Value = TextBox28.Value
+    ws.Cells(lastRow, 7).Value = TextBox27.Value
+    ws.Cells(lastRow, 11).Value = 10
+    ws.Cells(lastRow, 12).Value = "PENDENTE"
+    
+    MsgBox "Parcelas cadastradas com sucesso!", vbInformation, "Sucesso"
+    
+    Unload Me
+
+End Sub
