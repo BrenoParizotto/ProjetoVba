@@ -17,6 +17,38 @@ Sub Cadastrar_Click()
         Exit Sub
     End If
     
+    If IsNumeric(Expansao.Text) Then
+        MsgBox "O gerente de expansão: " & Expansao.Text & " é inválido.", vbCritical, "Erro"
+        Expansao.Text = ""
+        Exit Sub
+    End If
+    
+    If IsNumeric(Autorizado.Text) Then
+        MsgBox "O autorizado: " & Autorizado.Text & " é inválido.", vbCritical, "Erro"
+        Autorizado.Text = ""
+        Exit Sub
+    End If
+    
+    If Autorizado.Value = "" Then
+    MsgBox "Favor informar nome do autorizado.", vbCritical, ""
+    Exit Sub
+    End If
+    
+    If ESP.Value = "" Then
+    MsgBox "Favor informar nome do especialista.", vbCritical, ""
+    Exit Sub
+    End If
+    
+      If INVESTIDOR.Value = "" Then
+    MsgBox "Favor informar nome do representante.", vbCritical, ""
+    Exit Sub
+    End If
+    
+    If Expansao.Value = "" Then
+    MsgBox "Favor informar nome do gerente de expansão.", vbCritical, ""
+    Exit Sub
+    End If
+
     If TextBox5.Value = "" Then
     MsgBox "Favor informar a data de contrato.", vbCritical, ""
     Exit Sub
@@ -63,23 +95,823 @@ Sub Cadastrar_Click()
     
     Call cadastrarProv
    
-    Dim respostaNovoCadastro As Integer
-    respostaNovoCadastro = MsgBox("Cadastrado com sucesso! Deseja realizar outro registro?", vbInformation + vbYesNo, "Confirmação")
-   
-    If respostaNovoCadastro = vbNo Then Unload Me
-
     cadastroProvisionamento.UFV.ListIndex = -1
 End Sub
 
 Sub cadastrarProv()
     Dim ws As Worksheet
+    Dim i As Long
     Set ws = ThisWorkbook.Sheets("BasePagamentos")
-    
     Dim lastRow As Long
-    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row + 1
     
-    ws.Cells(lastRow, 1).Value = UCase(Cliente.Text)
-    ws.Cells(lastRow, 4).Value = UFV.Value
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+    
+    If TextBox1.Value = 1 Then
+    ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+    
+ElseIf TextBox1.Value = 2 Then
+        ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+ElseIf TextBox1.Value = 3 Then
+    ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+   
+ElseIf TextBox1.Value = 4 Then
+    ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+    
+ElseIf TextBox1.Value = 5 Then
+
+    ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+    
+ElseIf TextBox1.Value = 6 Then
+
+    ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+    
+ElseIf TextBox1.Value = 7 Then
+
+    ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+    
+ElseIf TextBox1.Value = 8 Then
+
+    ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+
+ElseIf TextBox1.Value = 9 Then
+
+    ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+    
+ElseIf TextBox1.Value = 10 Then
+
+    ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
+  ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
+    ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
+    ws.Cells(lastRow, 3).Value = TextBox5.Value 'dtcontrato
+    ws.Cells(lastRow, 4).Value = UFV.Value 'ufv
+    ws.Cells(lastRow, 6).Value = TextBox3.Value 'vlrtotal
+    ws.Cells(lastRow, 14).Value = UCase(Expansao.Text)
+    ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
+    ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
+    ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+    End If
+    Unload Me
+    MsgBox "Provisionamento cadastrado com sucesso!", vbInformation, "Confirmação"
     
     Call limparcampos
 End Sub
@@ -96,7 +928,7 @@ Else
 CheckBox2.Value = True And CheckBox1.Value = False
 End If
 End Sub
-Private Sub CheckBox1_Click()
+Private Sub CheckBox1_Click() '1 é assinado
 If CheckBox2.Value = False Then
 CheckBox1.Value = True
 Else
