@@ -118,6 +118,8 @@ Sub cadastrarParcela()
     ws.Cells(lastRow, 7).Value = TextBox16.Value
     ws.Cells(lastRow, 11).Value = 1
     ws.Cells(lastRow, 12).Value = "PENDENTE"
+    ws.Cells(lastRow, 18).Value = 0
+    ws.Cells(lastRow, 19).Value = TextBox17.Value
 
     lastRow = lastRow + 1
     
@@ -126,6 +128,8 @@ Sub cadastrarParcela()
     ws.Cells(lastRow, 7).Value = TextBox7.Value
     ws.Cells(lastRow, 11).Value = 2
     ws.Cells(lastRow, 12).Value = "PENDENTE"
+    ws.Cells(lastRow, 18).Value = 0
+    ws.Cells(lastRow, 19).Value = TextBox15.Value
     
     lastRow = lastRow + 1
 
@@ -135,6 +139,8 @@ Sub cadastrarParcela()
     ws.Cells(lastRow, 7).Value = TextBox25.Value
     ws.Cells(lastRow, 11).Value = 3
     ws.Cells(lastRow, 12).Value = "PENDENTE"
+    ws.Cells(lastRow, 18).Value = 0
+    ws.Cells(lastRow, 19).Value = TextBox6.Value
     
      lastRow = lastRow + 1
 
@@ -144,6 +150,8 @@ Sub cadastrarParcela()
     ws.Cells(lastRow, 7).Value = TextBox11.Value
     ws.Cells(lastRow, 11).Value = 4
     ws.Cells(lastRow, 12).Value = "PENDENTE"
+    ws.Cells(lastRow, 18).Value = 0
+    ws.Cells(lastRow, 19).Value = TextBox12.Value
     
      lastRow = lastRow + 1
 
@@ -153,6 +161,8 @@ Sub cadastrarParcela()
     ws.Cells(lastRow, 7).Value = TextBox13.Value
     ws.Cells(lastRow, 11).Value = 5
     ws.Cells(lastRow, 12).Value = "PENDENTE"
+    ws.Cells(lastRow, 18).Value = 0
+    ws.Cells(lastRow, 19).Value = TextBox14.Value
     
      lastRow = lastRow + 1
 
@@ -162,6 +172,8 @@ Sub cadastrarParcela()
     ws.Cells(lastRow, 7).Value = TextBox18.Value
     ws.Cells(lastRow, 11).Value = 6
     ws.Cells(lastRow, 12).Value = "PENDENTE"
+    ws.Cells(lastRow, 18).Value = 0
+    ws.Cells(lastRow, 19).Value = TextBox19.Value
     
     lastRow = lastRow + 1
 
@@ -171,6 +183,8 @@ Sub cadastrarParcela()
     ws.Cells(lastRow, 7).Value = TextBox20.Value
     ws.Cells(lastRow, 11).Value = 7
     ws.Cells(lastRow, 12).Value = "PENDENTE"
+    ws.Cells(lastRow, 18).Value = 0
+    ws.Cells(lastRow, 19).Value = TextBox21.Value
     
     lastRow = lastRow + 1
 
@@ -180,6 +194,8 @@ Sub cadastrarParcela()
     ws.Cells(lastRow, 7).Value = TextBox22.Value
     ws.Cells(lastRow, 11).Value = 8
     ws.Cells(lastRow, 12).Value = "PENDENTE"
+    ws.Cells(lastRow, 18).Value = 0
+    ws.Cells(lastRow, 19).Value = TextBox23.Value
   
       lastRow = lastRow + 1
 
@@ -189,6 +205,8 @@ Sub cadastrarParcela()
     ws.Cells(lastRow, 7).Value = TextBox24.Value
     ws.Cells(lastRow, 11).Value = 9
     ws.Cells(lastRow, 12).Value = "PENDENTE"
+    ws.Cells(lastRow, 18).Value = 0
+    ws.Cells(lastRow, 19).Value = TextBox26.Value
     
     lastRow = lastRow + 1
 
@@ -198,6 +216,8 @@ Sub cadastrarParcela()
     ws.Cells(lastRow, 7).Value = TextBox27.Value
     ws.Cells(lastRow, 11).Value = 10
     ws.Cells(lastRow, 12).Value = "PENDENTE"
+    ws.Cells(lastRow, 18).Value = 0
+    ws.Cells(lastRow, 19).Value = TextBox28.Value
     
     MsgBox "Parcelas cadastradas com sucesso!", vbInformation, "Sucesso"
     
