@@ -1,0 +1,86 @@
+Private Sub CheckBox2_Click()
+If CheckBox2.Value = True Then
+CheckBox1.Value = False
+Else
+CheckBox2.Value = True And CheckBox1.Value = False
+End If
+End Sub
+
+Private Sub CheckBox1_Click()
+If CheckBox2.Value = False Then
+CheckBox1.Value = True
+Else
+CheckBox2.Value = False And CheckBox1.Value = True
+End If
+End Sub
+Private Sub CommandButton1_Click()
+
+If cadastroProvisionamento.Label9.Visible = True Then
+MsgBox "Favor Finalizar o cadastro antes de sair. Já existem parcelas cadastradas!", vbCritical, ""
+Exit Sub
+End If
+
+    Dim resposta As Integer
+    resposta = MsgBox("Deseja realmente sair?", vbInformation + vbYesNo, "")
+    If resposta = vbYes Then Unload Me
+End Sub
+Private Sub CommandButton2_Click()
+
+If TextBox3.Value = 0 Or TextBox3.Value = "" Then
+MsgBox "Informe o valor total antes de cadastrar as parcelas.", vbExclamation, ""
+Exit Sub
+End If
+
+If Not IsNumeric(TextBox3.Value) Then
+MsgBox "O valor total da aquisição: " & TextBox3.Value & " é inválido.", vbInformation, ""
+Exit Sub
+End If
+
+    If TextBox1.Value = 0 Then
+        MsgBox "Insira ao menos 1 parcela.", vbExclamation, ""
+    ElseIf TextBox1.Value = 1 Then
+        ValorParcelas1.Show
+        ElseIf TextBox1.Value = 2 Then
+        ValorParcelas2.Show
+        ElseIf TextBox1.Value = 3 Then
+        ValorParcelas3.Show
+        ElseIf TextBox1.Value = 4 Then
+        ValorParcelas4.Show
+        ElseIf TextBox1.Value = 5 Then
+        ValorParcelas5.Show
+        ElseIf TextBox1.Value = 6 Then
+        ValorParcelas6.Show
+        ElseIf TextBox1.Value = 7 Then
+        ValorParcelas7.Show
+        ElseIf TextBox1.Value = 8 Then
+        ValorParcelas8.Show
+        ElseIf TextBox1.Value = 9 Then
+        ValorParcelas9.Show
+        ElseIf TextBox1.Value = 10 Then
+        ValorParcelas10.Show
+    End If
+End Sub
+Private Sub Label10_Click()
+Label9.Visible = False
+
+If TextBox1.Value = 10 Then
+        MsgBox "Valor máximo de parcelas atingido!", vbInformation, ""
+    ElseIf TextBox1.Value < 10 Then
+        TextBox1.Value = TextBox1.Value + 1
+    End If
+End Sub
+Private Sub Label14_Click()
+If TextBox4.Value = 100 Then
+        MsgBox "Valor máximo de parcelas atingido!", vbInformation, ""
+    ElseIf TextBox4.Value < 100 Then
+        TextBox4.Value = TextBox4.Value + 1
+    End If
+End Sub
+Private Sub UserForm_Initialize()
+    UFV.RowSource = "USINAS!A1:A150"
+    cadastroProvisionamento.UFV.ListIndex = -1
+End Sub
+
+Sub limparcampos()
+cadastroProvisionamento.UFV.ListIndex = -1
+End Sub
