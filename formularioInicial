@@ -1,3 +1,4 @@
+
 Sub Cadastrar_Click()
     If IsNumeric(Cliente.Text) Then
         MsgBox "O cliente: " & Cliente.Text & " é inválido.", vbCritical, "Erro"
@@ -163,6 +164,11 @@ ElseIf TextBox1.Value = 3 Then
     ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
     ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
     ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
     lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
   ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
     ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
@@ -204,6 +210,11 @@ ElseIf TextBox1.Value = 4 Then
     ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
     ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
     ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
     
 lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
   ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
@@ -262,6 +273,12 @@ ElseIf TextBox1.Value = 5 Then
     ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
     ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
     ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+    
     
     lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
   ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
@@ -335,6 +352,11 @@ ElseIf TextBox1.Value = 6 Then
     ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
     ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
     ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
     
     lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
   ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
@@ -423,6 +445,12 @@ ElseIf TextBox1.Value = 7 Then
     ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
     ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
     ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+    
 lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
   ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
     ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
@@ -525,6 +553,12 @@ ElseIf TextBox1.Value = 8 Then
     ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
     ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
     ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+    
 lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
   ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
     ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
@@ -642,6 +676,12 @@ ElseIf TextBox1.Value = 9 Then
     ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
     ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
     ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+    
 lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
   ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
     ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
@@ -774,6 +814,12 @@ ElseIf TextBox1.Value = 10 Then
     ws.Cells(lastRow, 15).Value = UCase(Autorizado.Text)
     ws.Cells(lastRow, 16).Value = UCase(INVESTIDOR.Text)
     ws.Cells(lastRow, 21).Value = TextBox4.Value / 100 'vlrtotal
+    If CheckBox1.Value = True Then
+ws.Cells(lastRow, 17).Value = "ASSINADO"
+Else
+ws.Cells(lastRow, 17).Value = "AGUARDANDO ASSINATURA"
+End If
+    
     lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
   ws.Cells(lastRow, 1).Value = UCase(Cliente.Text) 'investidor
     ws.Cells(lastRow, 2).Value = UCase(ESP.Text) 'especialista
