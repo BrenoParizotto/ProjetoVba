@@ -1,3 +1,94 @@
+Sub Cadastrar_Click()
+    If IsNumeric(Cliente.Text) Then
+        MsgBox "O cliente: " & Cliente.Text & " é inválido.", vbCritical, "Erro"
+        Cliente.Text = ""
+        Exit Sub
+    End If
+    
+        If IsNumeric(INVESTIDOR.Text) Then
+        MsgBox "O representante: " & INVESTIDOR.Text & " é inválido.", vbCritical, "Erro"
+        INVESTIDOR.Text = ""
+        Exit Sub
+    End If
+    
+      If IsNumeric(ESP.Text) Then
+        MsgBox "O especialista: " & ESP.Text & " é inválido.", vbCritical, "Erro"
+        ESP.Text = ""
+        Exit Sub
+    End If
+    
+    If TextBox5.Value = "" Then
+    MsgBox "Favor informar a data de contrato.", vbCritical, ""
+    Exit Sub
+    End If
+    
+    If Label9.Visible = False Then
+    MsgBox "As parcelas não foram cadastradas.", vbCritical, ""
+    Exit Sub
+    End If
+    
+    If CheckBox1.Value = False And CheckBox2.Value = False Then
+    MsgBox "Favor marcar a situação do contrato!", vbCritical, ""
+    Exit Sub
+    End If
+    
+    If Cliente.Text = "" Then
+        MsgBox "Informe o nome do cliente.", vbCritical, "Erro"
+        Exit Sub
+    End If
+    
+    If TextBox1 = "" Then
+    MsgBox "O número de parcelas está zerado.", vbCritical, ""
+    Exit Sub
+    End If
+    
+    If TextBox1 > 10 Then
+    MsgBox "Favor verificar o número de parcelas.", vbCritical, ""
+    Exit Sub
+    End If
+    
+    If TextBox4 > 100 Or TextBox4 = 0 Then
+    MsgBox "Favor verificar a porcentagem do investimento.", vbCritical, ""
+    Exit Sub
+    End If
+    
+    If cadastroProvisionamento.UFV.ListIndex < 0 Then
+        MsgBox "Não há nenhuma UFV selecionada!", vbCritical, "Aviso"
+        Exit Sub
+    End If
+    
+    Dim resposta As Integer
+    resposta = MsgBox("Confirma o cadastro de pagamento?", vbInformation + vbYesNo, "Confirmação")
+    If resposta = vbNo Then Exit Sub
+    
+    Call cadastrarProv
+   
+    Dim respostaNovoCadastro As Integer
+    respostaNovoCadastro = MsgBox("Cadastrado com sucesso! Deseja realizar outro registro?", vbInformation + vbYesNo, "Confirmação")
+   
+    If respostaNovoCadastro = vbNo Then Unload Me
+
+    cadastroProvisionamento.UFV.ListIndex = -1
+End Sub
+
+Sub cadastrarProv()
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("BasePagamentos")
+    
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.Count, "A").End(xlUp).Row + 1
+    
+    ws.Cells(lastRow, 1).Value = UCase(Cliente.Text)
+    ws.Cells(lastRow, 4).Value = UFV.Value
+    
+    Call limparcampos
+End Sub
+
+
+Private Sub CadastroTela_Click()
+
+End Sub
+
 Private Sub CheckBox2_Click()
 If CheckBox2.Value = True Then
 CheckBox1.Value = False
@@ -5,7 +96,6 @@ Else
 CheckBox2.Value = True And CheckBox1.Value = False
 End If
 End Sub
-
 Private Sub CheckBox1_Click()
 If CheckBox2.Value = False Then
 CheckBox1.Value = True
