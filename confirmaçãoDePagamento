@@ -1,0 +1,215 @@
+Private Sub CheckBox2_Click()
+If CheckBox1.Value = True Then CheckBox1.Value = False And CheckBox2.Value = True
+TituloParcial.Visible = True
+ValorParcial.Visible = True
+End Sub
+Private Sub CheckBox1_Click()
+If CheckBox2.Value = True Then CheckBox2.Value = False And CheckBox1.Value = True
+TituloParcial.Visible = False
+ValorParcial.Visible = False
+End Sub
+Private Sub CommandButton1_Click()
+
+If ListBox5.ListIndex < 0 Or ListBox3.ListIndex < 0 Or ListBox4.ListIndex < 0 Then
+MsgBox "Selecione pelo menos uma opção de cada campo.", vbExclamation, "Aviso"
+Exit Sub
+End If
+
+If TextBox2.Value = "" Then
+MsgBox "Informa a data que o pagamento foi realizado.", vbExclamation, "Aviso"
+Exit Sub
+End If
+
+
+
+If CheckBox2.Value = False And CheckBox1.Value = False Then
+MsgBox "Selecione a opção se o pagamento é total ou parcial.", vbExclamation, "Aviso"
+Exit Sub
+End If
+
+If CheckBox2.Value = True And ValorParcial.Value = "" Then
+MsgBox "Informe o valor de pagamento parcial.", vbExclamation, "Aviso"
+Exit Sub
+End If
+
+If TextBox4.Value = 0 Then
+MsgBox "Não há nenhum valor pendente correspondente aos critérios acima.", vbCritical, "Erro"
+Exit Sub
+End If
+
+If CheckBox2.Value = True Then
+Dim parcial As Double
+parcial = CDbl(ValorParcial)
+
+Dim Pendente As Double
+Pendente = CDbl(TextBox4)
+
+If parcial >= Pendente Then
+MsgBox "O pagamento parcial não pode ser maior nem igual ao valor pendente.", vbCritical, "Erro"
+Exit Sub
+End If
+End If
+
+If CheckBox2.Value = True Then
+Call alterarValorPagoParcial
+Exit Sub
+End If
+
+If CheckBox1.Value = True Then
+Call confirmarValorTotal
+Exit Sub
+End If
+
+
+End Sub
+Private Sub ListBox4_click()
+Call somarPagoCriterios
+Call somarPendenteCriterios
+End Sub
+Private Sub ListBox5_click()
+Call somarPagoCriterios
+Call somarPendenteCriterios
+End Sub
+Private Sub ListBox3_click()
+Call somarPagoCriterios
+Call somarPendenteCriterios
+End Sub
+Private Sub UserForm_Initialize()
+
+    ListBox5.RowSource = "USINAS!H2:H200"
+    Userform1.ListBox5.ListIndex = -1
+    ListBox3.RowSource = "USINAS!J2:J200"
+    Userform1.ListBox3.ListIndex = -1
+    ListBox4.RowSource = "USINAS!L2:L200"
+    Userform1.ListBox4.ListIndex = -1
+
+End Sub
+Sub somarPagoCriterios()
+    Dim somavalorPago As Double
+    Dim ws As Worksheet
+    Dim investidor, ufv, dtprov As String
+    
+    Set ws = ThisWorkbook.Sheets("BasePagamentos")
+
+    If ListBox5.ListIndex >= 0 And ListBox3.ListIndex >= 0 And ListBox4.ListIndex >= 0 Then
+        investidor = ListBox5.Value
+        ufv = ListBox4.Value
+        dtprov = ListBox3.Value
+
+        somavalorPago = Application.WorksheetFunction.SumIfs(ws.Range("r:r"), ws.Range("a:a"), investidor, ws.Range("d:d"), ufv, ws.Range("h:h"), dtprov)
+       TextBox3.Visible = True
+        TextBox3.Value = somavalorPago
+        Pago.Visible = True
+       
+           End If
+End Sub
+
+Sub somarPendenteCriterios()
+
+If ListBox5.ListIndex >= 0 And ListBox3.ListIndex >= 0 And ListBox4.ListIndex >= 0 Then
+
+Dim ws As Worksheet
+Dim investidor, ufv, dtprov As String
+    
+Set ws = ThisWorkbook.Sheets("BasePagamentos")
+            investidor = ListBox5.Value
+        ufv = ListBox4.Value
+        dtprov = ListBox3.Value
+
+Dim somavalorPago As Double
+somavalorPago = Application.WorksheetFunction.SumIfs(ws.Range("r:r"), ws.Range("a:a"), investidor, ws.Range("d:d"), ufv, ws.Range("h:h"), dtprov)
+
+Dim somadaparcela As Double
+somadaparcela = Application.WorksheetFunction.SumIfs(ws.Range("g:g"), ws.Range("a:a"), investidor, ws.Range("d:d"), ufv, ws.Range("h:h"), dtprov) - somavalorPago
+Pendente.Visible = True
+TextBox4.Visible = True
+
+TextBox4.Value = somadaparcela
+     End If
+End Sub
+
+Sub alterarValorPagoParcial()
+
+
+Dim ws As Worksheet
+Dim investidor, ufv, dtprov, dtpag As String
+    
+ dtpag = TextBox2.Value
+ 
+Set ws = ThisWorkbook.Sheets("BasePagamentos")
+            investidor = ListBox5.Value
+        ufv = ListBox4.Value
+        dtprov = ListBox3.Value
+
+Dim somavalorPago As Double
+somavalorPago = Application.WorksheetFunction.SumIfs(ws.Range("r:r"), ws.Range("a:a"), investidor, ws.Range("d:d"), ufv, ws.Range("h:h"), dtprov)
+
+Dim valorParcialDigitado As Double
+valorParcialDigitado = ValorParcial.Value
+
+Dim valorParcialNovo As Double
+valorParcialNovo = somavalorPago + valorParcialDigitado
+
+Dim PlanilhaConfirmar As Worksheet
+    Dim CelulaBase As Range
+    
+    Set PlanilhaBase = ThisWorkbook.Sheets("BasePagamentos")
+    
+    For Each CelulaBase In PlanilhaBase.Range("L1:L" & PlanilhaBase.Cells(Rows.Count, "L").End(xlUp).Row)
+        If CelulaBase.Offset(0, -11).Value = investidor And CelulaBase.Offset(0, -4).Value = dtprov And CelulaBase.Offset(0, -8).Value = ufv Then
+
+CelulaBase.Offset(0, 7).Value = dtpag
+CelulaBase.Offset(0, 6).Value = valorParcialNovo
+
+    End If
+Next CelulaBase
+
+Dim respostas As Integer
+respostas = MsgBox("Confirma o registro do pagamento parcial no valor de: " & valorParcialDigitado & " . Para o cliente: " & investidor & "?", vbInformation + vbYesNo, "")
+
+MsgBox "Pagamento registrado com sucesso!", vbInformation, "Confirmação"
+ 
+Unload Me
+
+End Sub
+
+Sub confirmarValorTotal()
+
+Dim ws As Worksheet
+Dim investidor, ufv, dtprov, dtpag As String
+    
+ dtpag = TextBox2.Value
+ 
+Set ws = ThisWorkbook.Sheets("BasePagamentos")
+            investidor = ListBox5.Value
+        ufv = ListBox4.Value
+        dtprov = ListBox3.Value
+
+Dim valordaparcela As Double
+valordaparcela = Application.WorksheetFunction.SumIfs(ws.Range("g:g"), ws.Range("a:a"), investidor, ws.Range("d:d"), ufv, ws.Range("h:h"), dtprov)
+
+Dim mespagamento As String
+mespagamento = Month(dtpag)
+    Dim CelulaBase As Range
+    
+        Set PlanilhaBase = ThisWorkbook.Sheets("BasePagamentos")
+
+For Each CelulaBase In PlanilhaBase.Range("L1:L" & PlanilhaBase.Cells(Rows.Count, "L").End(xlUp).Row)
+        If CelulaBase.Offset(0, -11).Value = investidor And CelulaBase.Offset(0, -4).Value = dtprov And CelulaBase.Offset(0, -8).Value = ufv Then
+            CelulaBase.Value = "CONFIRMADO"
+            CelulaBase.Offset(0, -4).Value = dtpag
+            CelulaBase.Offset(0, 1).Value = mespagamento
+            CelulaBase.Offset(0, 6).Value = valordaparcela
+            
+CelulaBase.Offset(0, 7).Value = dtpag
+End If
+Next CelulaBase
+
+Dim respostas As Integer
+respostas = MsgBox("Deseja confirmar o pagamento da parcela?", vbInformation + vbYesNo, "")
+
+MsgBox "Pagamento confirmado com sucesso!", vbInformation, "Confirmação"
+ 
+Unload Me
+
+End Sub
