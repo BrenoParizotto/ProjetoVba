@@ -1,0 +1,102 @@
+
+
+Private Sub CommandButton1_Click()
+
+If TextBox1.Value = "" Then
+MsgBox "Informe a data da assinatura.", vbCritical, "Erro"
+Exit Sub
+End If
+
+If ListBox1.ListIndex < 0 Or ListBox2.ListIndex < 0 Then
+MsgBox "Selecione as opções do cliente e da UFV.", vbCritical, "Erro"
+Exit Sub
+End If
+
+If Label32.Visible = True Then
+MsgBox "Nenhum contrato foi encontrado com os critérios acima.", vbCritical, "Erro"
+Exit Sub
+End If
+
+If ListBox2.Value = "" Or ListBox1.Value = "" Then
+MsgBox "Não são permitidos valores nulos para o investor ou UFV.", vbCritical, ""
+Exit Sub
+End If
+
+
+Call assinarContrato
+
+End Sub
+
+Private Sub ListBox2_Click()
+Call contarParcelasCliente
+End Sub
+
+Private Sub ListBox1_Click()
+Call contarParcelasCliente
+End Sub
+
+Private Sub UserForm_Initialize()
+
+    ListBox1.RowSource = "USINAS!c2:c200"
+    UserForm2.ListBox1.ListIndex = -1
+    ListBox2.RowSource = "USINAS!e2:e200"
+    UserForm2.ListBox2.ListIndex = -1
+    End Sub
+    
+Sub contarParcelasCliente()
+
+    If ListBox2.ListIndex >= 0 And ListBox1.ListIndex >= 0 Then
+        
+        Dim somaparcelas As Double
+    Dim ws As Worksheet
+    Dim INVESTIDOR, UFV As String
+    
+    Set ws = ThisWorkbook.Sheets("BasePagamentos")
+
+INVESTIDOR = ListBox1.Value
+        UFV = ListBox2.Value
+        somaparcelas = Application.WorksheetFunction.SumIfs(ws.Range("e:e"), ws.Range("a:a"), INVESTIDOR, ws.Range("d:d"), UFV)
+  
+        
+        If somaparcelas > 0 Then
+        Label31.Visible = True
+        Label32.Visible = False
+        End If
+        If somaparcelas < 0 Then
+        Label32.Visible = True
+        Label31.Visible = False
+       End If
+             End If
+       
+       End Sub
+
+Sub assinarContrato()
+    Dim PlanilhaBase As Worksheet
+    Dim CelulaBase As Range
+    Dim ValorB2 As String
+    Dim UFV As String
+    Dim DataB5 As Date
+
+    
+  
+    Set PlanilhaBase = ThisWorkbook.Sheets("BasePagamentos")
+    
+
+    ValorB2 = ListBox1.Value
+    UFV = ListBox2.Value
+    DataB5 = TextBox1.Value
+    
+
+    For Each CelulaBase In PlanilhaBase.Range("Q1:Q" & PlanilhaBase.Cells(Rows.Count, "Q").End(xlUp).Row)
+        If CelulaBase.Offset(0, -16).Value = ValorB2 And CelulaBase.Offset(0, -13).Value = UFV Then
+            CelulaBase.Value = "ASSINADO"
+            CelulaBase.Offset(0, -14).Value = DataB5
+        End If
+    Next CelulaBase
+    Unload Me
+    
+    MsgBox "Assinatura de contrato do(a) investidor " & ValorB2 & "foi confirmada.", vbInformation, "Confirmação"
+    
+
+
+End Sub
