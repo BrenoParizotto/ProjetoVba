@@ -1,0 +1,111 @@
+Sub processardata()
+ 
+ Dim PlanilhaBase As Worksheet
+
+    Dim CelulaBase As Range
+    Dim ValorB2 As String
+    Dim ValorB3 As String
+    Dim ValorB4 As String
+    Dim DataB5 As Date
+    Dim mes As String
+    Dim SEMANA As String
+    
+    
+    
+    ' Defina as planilhas
+    Set PlanilhaBase = ThisWorkbook.Sheets("BasePagamentos")
+
+    
+    ' Obtenha os valores das células B2, B3 e B4 da aba ConfirmarPagamento
+    ValorB2 = ListBox1.Value
+    ValorB3 = ListBox2.Value
+    ValorB4 = ListBox3.Value
+    DataB5 = TextBox1.Value
+    
+    ' Percorra todas as células na coluna L da planilha BasePagamentos
+    For Each CelulaBase In PlanilhaBase.Range("H1:H" & PlanilhaBase.Cells(Rows.Count, "H").End(xlUp).Row)
+        If CelulaBase.Offset(0, -7).Value = ValorB2 And CelulaBase.Offset(0, -4).Value = ValorB3 And CelulaBase.Offset(0, 3).Value = ValorB4 Then
+            CelulaBase.Value = DataB5
+        End If
+    Next CelulaBase
+ 
+ 
+ End Sub
+
+Private Sub CommandButton1_Click()
+
+If ListBox1.ListIndex < 0 Or ListBox3.ListIndex < 0 Or ListBox2.ListIndex < 0 Then
+MsgBox "A seleção de todos os campos é obrigatória.", vbCritical, "Erro"
+Exit Sub
+End If
+
+If TextBox1.Value = "" Then
+MsgBox "Favor informe a nova data provisionada.", vbCritical, ""
+Exit Sub
+End If
+
+If TextBox2.Value = 0 Then
+MsgBox "Nenhum valor foi encontrado com os critérios acima.Favor verificar.", vbCritical, ""
+Exit Sub
+End If
+
+Call processardata
+
+Unload Me
+
+MsgBox "Data alterada com sucesso!", vbInformation, ""
+
+
+End Sub
+Private Sub ListBox2_Click()
+Call somarPendenteCriterios
+End Sub
+Private Sub ListBox3_Click()
+Call somarPendenteCriterios
+End Sub
+Private Sub ListBox1_Click()
+Call somarPendenteCriterios
+End Sub
+
+' TEM QUE MUDAR A DATA ULT
+Private Sub UserForm_Initialize()
+ListBox1.RowSource = "USINAS!t2:t200"
+    UserForm3.ListBox1.ListIndex = -1
+    ListBox2.RowSource = "USINAS!v2:v200"
+    UserForm3.ListBox2.ListIndex = -1
+    ListBox3.RowSource = "USINAS!y1:y10"
+    UserForm3.ListBox3.ListIndex = -1
+End Sub
+
+Sub somarPendenteCriterios()
+
+If ListBox1.ListIndex >= 0 And ListBox2.ListIndex >= 0 And ListBox3.ListIndex >= 0 Then
+
+Dim ws As Worksheet
+Dim INVESTIDOR, UFV, numparcela As String
+    
+Set ws = ThisWorkbook.Sheets("BasePagamentos")
+            INVESTIDOR = ListBox1.Value
+        UFV = ListBox2.Value
+        numparcela = ListBox3.Value
+
+Dim somavalorPago As Double
+somavalorPago = Application.WorksheetFunction.SumIfs(ws.Range("r:r"), ws.Range("a:a"), INVESTIDOR, ws.Range("d:d"), UFV, ws.Range("k:k"), numparcela)
+
+Dim somadaparcela As Double
+somadaparcela = Application.WorksheetFunction.SumIfs(ws.Range("g:g"), ws.Range("a:a"), INVESTIDOR, ws.Range("d:d"), UFV, ws.Range("k:k"), numparcela) - somavalorPago
+
+TextBox2.Value = somadaparcela
+     End If
+     
+     If somadaparcela > 0 Then
+     Label31.Visible = True
+     Label32.Visible = False
+     End If
+     
+     If somadaparcela <= 0 Then
+     Label32.Visible = True
+     Label31.Visible = False
+     End If
+     
+End Sub
