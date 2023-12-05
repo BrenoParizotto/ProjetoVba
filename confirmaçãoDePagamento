@@ -2,13 +2,22 @@ Private Sub CheckBox2_Click()
 If CheckBox1.Value = True Then CheckBox1.Value = False And CheckBox2.Value = True
 TituloParcial.Visible = True
 ValorParcial.Visible = True
+
+
 End Sub
 Private Sub CheckBox1_Click()
 If CheckBox2.Value = True Then CheckBox2.Value = False And CheckBox1.Value = True
 TituloParcial.Visible = False
 ValorParcial.Visible = False
+
+
 End Sub
 Private Sub CommandButton1_Click()
+
+If Len(TextBox2) < 10 Then
+MsgBox "Informe a data completa.  (dd/mm/yyyy)  ", vbCritical, ""
+Exit Sub
+End If
 
 If ListBox5.ListIndex < 0 Or ListBox3.ListIndex < 0 Or ListBox4.ListIndex < 0 Then
 MsgBox "Selecione pelo menos uma opção de cada campo.", vbExclamation, "Aviso"
@@ -62,6 +71,16 @@ End If
 
 
 End Sub
+
+Private Sub CommandButton2_Click()
+Dim sair As Integer
+sair = MsgBox("Deseja realmente sair?", vbInformation + vbYesNo, "Confirmação")
+If sair = vbNo Then Exit Sub
+Unload Me
+Range("q20").Value = ""
+
+End Sub
+
 Private Sub ListBox4_click()
 Call somarPagoCriterios
 Call somarPendenteCriterios
@@ -69,11 +88,21 @@ End Sub
 Private Sub ListBox5_click()
 Call somarPagoCriterios
 Call somarPendenteCriterios
+Range("q20").Value = ListBox5.Value
 End Sub
-Private Sub ListBox3_click()
+Private Sub ListBox3_Click()
 Call somarPagoCriterios
 Call somarPendenteCriterios
 End Sub
+
+
+Private Sub TextBox3_Change()
+Me.TextBox3.Text = Format(Me.TextBox3.Text, "#,##0.00")
+End Sub
+Private Sub TextBox4_Change()
+Me.TextBox4.Text = Format(Me.TextBox4.Text, "#,##0.00")
+End Sub
+
 Private Sub UserForm_Initialize()
 
     ListBox5.RowSource = "USINAS!H2:H200"
@@ -87,16 +116,16 @@ End Sub
 Sub somarPagoCriterios()
     Dim somavalorPago As Double
     Dim ws As Worksheet
-    Dim investidor, ufv, dtprov As String
+    Dim INVESTIDOR, UFV, dtprov As String
     
     Set ws = ThisWorkbook.Sheets("BasePagamentos")
 
     If ListBox5.ListIndex >= 0 And ListBox3.ListIndex >= 0 And ListBox4.ListIndex >= 0 Then
-        investidor = ListBox5.Value
-        ufv = ListBox4.Value
+        INVESTIDOR = ListBox5.Value
+        UFV = ListBox4.Value
         dtprov = ListBox3.Value
 
-        somavalorPago = Application.WorksheetFunction.SumIfs(ws.Range("r:r"), ws.Range("a:a"), investidor, ws.Range("d:d"), ufv, ws.Range("h:h"), dtprov)
+        somavalorPago = Application.WorksheetFunction.SumIfs(ws.Range("r:r"), ws.Range("a:a"), INVESTIDOR, ws.Range("d:d"), UFV, ws.Range("h:h"), dtprov)
        TextBox3.Visible = True
         TextBox3.Value = somavalorPago
         Pago.Visible = True
@@ -109,84 +138,185 @@ Sub somarPendenteCriterios()
 If ListBox5.ListIndex >= 0 And ListBox3.ListIndex >= 0 And ListBox4.ListIndex >= 0 Then
 
 Dim ws As Worksheet
-Dim investidor, ufv, dtprov As String
+Dim INVESTIDOR, UFV, dtprov As String
     
 Set ws = ThisWorkbook.Sheets("BasePagamentos")
-            investidor = ListBox5.Value
-        ufv = ListBox4.Value
+            INVESTIDOR = ListBox5.Value
+        UFV = ListBox4.Value
         dtprov = ListBox3.Value
 
 Dim somavalorPago As Double
-somavalorPago = Application.WorksheetFunction.SumIfs(ws.Range("r:r"), ws.Range("a:a"), investidor, ws.Range("d:d"), ufv, ws.Range("h:h"), dtprov)
+somavalorPago = Application.WorksheetFunction.SumIfs(ws.Range("r:r"), ws.Range("a:a"), INVESTIDOR, ws.Range("d:d"), UFV, ws.Range("h:h"), dtprov)
 
 Dim somadaparcela As Double
-somadaparcela = Application.WorksheetFunction.SumIfs(ws.Range("g:g"), ws.Range("a:a"), investidor, ws.Range("d:d"), ufv, ws.Range("h:h"), dtprov) - somavalorPago
+somadaparcela = Application.WorksheetFunction.SumIfs(ws.Range("g:g"), ws.Range("a:a"), INVESTIDOR, ws.Range("d:d"), UFV, ws.Range("h:h"), dtprov) - somavalorPago
 Pendente.Visible = True
 TextBox4.Visible = True
 
 TextBox4.Value = somadaparcela
      End If
 End Sub
+Sub criarNovaParcela()
+Dim horario, hora, min, seg
+horario = Now
 
-Sub alterarValorPagoParcial()
+hora = Hour(horario)
+min = Minute(horario)
+seg = Second(horario)
+
+Dim Tempo
+Tempo = hora & ":" & min & ":" & seg
+
+Dim usu
+usu = Application.UserName
+
+Dim data
+data = Date
+
+Dim resgistro
+REGISTRO = "Parcela parcial criada automaticamente. Confirmada por: " & usu & " , na data: " & data & " , às " & Tempo
 
 
-Dim ws As Worksheet
-Dim investidor, ufv, dtprov, dtpag As String
-    
- dtpag = TextBox2.Value
- 
-Set ws = ThisWorkbook.Sheets("BasePagamentos")
-            investidor = ListBox5.Value
-        ufv = ListBox4.Value
-        dtprov = ListBox3.Value
+    Dim INVESTIDOR As String
+    INVESTIDOR = ListBox5.Value
 
-Dim somavalorPago As Double
-somavalorPago = Application.WorksheetFunction.SumIfs(ws.Range("r:r"), ws.Range("a:a"), investidor, ws.Range("d:d"), ufv, ws.Range("h:h"), dtprov)
+    Dim UFV As String
+    UFV = ListBox4.Value
 
-Dim valorParcialDigitado As Double
-valorParcialDigitado = ValorParcial.Value
+    Dim valordaparcela As Double
+    valordaparcela = ValorParcial.Value
 
-Dim valorParcialNovo As Double
-valorParcialNovo = somavalorPago + valorParcialDigitado
+    Dim dataprov As Date
+    dataprov = CDate(TextBox2.Text)
 
-Dim PlanilhaConfirmar As Worksheet
-    Dim CelulaBase As Range
-    
-    Set PlanilhaBase = ThisWorkbook.Sheets("BasePagamentos")
-    
-    For Each CelulaBase In PlanilhaBase.Range("L1:L" & PlanilhaBase.Cells(Rows.Count, "L").End(xlUp).Row)
-        If CelulaBase.Offset(0, -11).Value = investidor And CelulaBase.Offset(0, -4).Value = dtprov And CelulaBase.Offset(0, -8).Value = ufv Then
+    ' Make sure "BasePagamentos" sheet is visible
+    Sheets("BasePagamentos").Visible = True
 
-CelulaBase.Offset(0, 7).Value = dtpag
-CelulaBase.Offset(0, 6).Value = valorParcialNovo
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("BasePagamentos")
 
-    End If
-Next CelulaBase
+    ' Find the last row with data in column A
+    Dim lastRow As Long
+    lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row + 1
 
-Dim respostas As Integer
-respostas = MsgBox("Confirma o registro do pagamento parcial no valor de: " & valorParcialDigitado & " . Para o cliente: " & investidor & "?", vbInformation + vbYesNo, "")
+    ' Populate the cells in the last row
+    ws.Cells(lastRow, 1).Value = INVESTIDOR
+    ws.Cells(lastRow, 49).Value = REGISTRO
+    ws.Cells(lastRow, 2).Value = Application.VLookup(INVESTIDOR, ws.Range("a1:b500"), 2, False)
+    ws.Cells(lastRow, 3).Value = Application.VLookup(INVESTIDOR, ws.Range("a1:C500"), 3, False)
+    ws.Cells(lastRow, 4).Value = Application.VLookup(INVESTIDOR, ws.Range("a1:d500"), 4, False)
+    ws.Cells(lastRow, 5).Value = Application.VLookup(INVESTIDOR, ws.Range("a1:e500"), 5, False)
+    ws.Cells(lastRow, 6).Value = Application.VLookup(INVESTIDOR, ws.Range("a1:f500"), 6, False)
+    ws.Cells(lastRow, 11).Value = Application.VLookup(INVESTIDOR, ws.Range("a1:N500"), 11, False) & ".1"
+    ws.Cells(lastRow, 14).Value = Application.VLookup(INVESTIDOR, ws.Range("a1:N500"), 14, False)
+    ws.Cells(lastRow, 15).Value = Application.VLookup(INVESTIDOR, ws.Range("a1:O500"), 15, False)
+    ws.Cells(lastRow, 16).Value = Application.VLookup(INVESTIDOR, ws.Range("a1:P500"), 16, False)
+    ws.Cells(lastRow, 21).Value = Application.VLookup(INVESTIDOR, ws.Range("a1:U500"), 21, False)
+    ws.Cells(lastRow, 19).Value = dataprov
+    ws.Cells(lastRow, 7).Value = valordaparcela
+    ws.Cells(lastRow, 8).Value = dataprov
+    ws.Cells(lastRow, 12).Value = "CONFIRMADO"
+    ws.Cells(lastRow, 18).Value = valordaparcela
+    ws.Cells(lastRow, 17).Value = Application.VLookup(INVESTIDOR, ws.Range("a1:Q500"), 17, False)
 
-MsgBox "Pagamento registrado com sucesso!", vbInformation, "Confirmação"
- 
-Unload Me
+    ' TextToColumns operation on column F
+    ws.Columns("F:F").TextToColumns Destination:=ws.Range("F1"), DataType:=xlDelimited, _
+        TextQualifier:=xlDoubleQuote, ConsecutiveDelimiter:=False, Tab:=False, _
+        Semicolon:=False, Comma:=False, Space:=False, Other:=False, FieldInfo _
+        :=Array(1, 1), TrailingMinusNumbers:=True
+
+    ' Switch back to "Menu Principal" sheet
+    Sheets("Menu Principal").Select
 
 End Sub
+Sub alterarValorPagoParcial()
+Application.ScreenUpdating = False
+
+    Dim ws As Worksheet
+    Dim INVEST As Variant, UFV As Variant, dtprov As Date
+
+    Set ws = ThisWorkbook.Sheets("BasePagamentos")
+    INVEST = ListBox5.Value
+    UFV = ListBox4.Value
+    dtprov = CDate(ListBox3.Text)
+
+    Dim somadaparcela As Double
+    somadaparcela = Application.WorksheetFunction.SumIfs(ws.Range("G:G"), ws.Range("A:A"), INVEST, ws.Range("D:D"), UFV, ws.Range("H:H"), dtprov)
+
+    Dim valorParcialDIgitado As Double
+    valorParcialDIgitado = ValorParcial.Value
+
+    Dim valorParcialNovo As Double
+    valorParcialNovo = somadaparcela - valorParcialDIgitado
+
+    Dim PlanilhaBase As Worksheet
+    Dim CelulaBase As Range
+
+    Set PlanilhaBase = ThisWorkbook.Sheets("BasePagamentos")
+
+    Dim resposta As VbMsgBoxResult
+    resposta = MsgBox("Confirma o registro do pagamento parcial no valor de: " & valorParcialDIgitado & ". Para o cliente: " & INVEST & "?", vbInformation + vbYesNo, "")
+
+    If resposta = vbNo Then Exit Sub
+
+    On Error Resume Next ' Enable error handling
+
+    For Each CelulaBase In PlanilhaBase.Range("A1:A" & PlanilhaBase.Cells(Rows.Count, "A").End(xlUp).Row)
+        If CelulaBase.Offset(0, 0).Value = INVEST And CelulaBase.Offset(0, 3).Value = UFV And CelulaBase.Offset(0, 7).Value = dtprov Then
+            CelulaBase.Offset(0, 6).Value = valorParcialNovo
+            Exit For ' Exit the loop once the first matching cell is found
+        End If
+    Next CelulaBase
+
+    On Error GoTo 0 ' Disable error handling
+
+    ' Specify the sheet for Range("Q20") and clear its contents
+    ws.Range("Q20").ClearContents
+
+    ' Call the criarNovaParcela subroutine
+    Call criarNovaParcela
+
+    MsgBox "Pagamento registrado com sucesso!", vbInformation, "Confirmação"
+
+    Unload Me
+End Sub
+
+
 
 Sub confirmarValorTotal()
+Dim horario, hora, min, seg
+horario = Now
 
+hora = Hour(horario)
+min = Minute(horario)
+seg = Second(horario)
+
+Dim Tempo
+Tempo = hora & ":" & min & ":" & seg
+
+Dim usu
+usu = Application.UserName
+
+Dim data
+data = Date
+
+Dim resgistro
+REGISTRO = "Parcela confirmada por: " & usu & " , na data: " & data & " , às " & Tempo
 Dim ws As Worksheet
-Dim investidor, ufv, dtprov, dtpag As String
-    
- dtpag = TextBox2.Value
+Dim INVESTIDOR, UFV As String
+
+
+    Dim dtpag As Date
+ dtpag = CDate(TextBox2.Text)
  
 Set ws = ThisWorkbook.Sheets("BasePagamentos")
-            investidor = ListBox5.Value
-        ufv = ListBox4.Value
-        dtprov = ListBox3.Value
+            INVESTIDOR = ListBox5.Value
+        UFV = ListBox4.Value
+        Dim dtprov As Date
+        dtprov = CDate(ListBox3.Text)
 
 Dim valordaparcela As Double
-valordaparcela = Application.WorksheetFunction.SumIfs(ws.Range("g:g"), ws.Range("a:a"), investidor, ws.Range("d:d"), ufv, ws.Range("h:h"), dtprov)
+valordaparcela = Application.WorksheetFunction.SumIfs(ws.Range("g:g"), ws.Range("a:a"), INVESTIDOR, ws.Range("d:d"), UFV, ws.Range("h:h"), dtprov)
 
 Dim mespagamento As String
 mespagamento = Month(dtpag)
@@ -195,11 +325,12 @@ mespagamento = Month(dtpag)
         Set PlanilhaBase = ThisWorkbook.Sheets("BasePagamentos")
 
 For Each CelulaBase In PlanilhaBase.Range("L1:L" & PlanilhaBase.Cells(Rows.Count, "L").End(xlUp).Row)
-        If CelulaBase.Offset(0, -11).Value = investidor And CelulaBase.Offset(0, -4).Value = dtprov And CelulaBase.Offset(0, -8).Value = ufv Then
+        If CelulaBase.Offset(0, -11).Value = INVESTIDOR And CelulaBase.Offset(0, -4).Value = dtprov And CelulaBase.Offset(0, -8).Value = UFV Then
             CelulaBase.Value = "CONFIRMADO"
             CelulaBase.Offset(0, -4).Value = dtpag
             CelulaBase.Offset(0, 1).Value = mespagamento
             CelulaBase.Offset(0, 6).Value = valordaparcela
+             CelulaBase.Offset(0, 31).Value = REGISTRO
             
 CelulaBase.Offset(0, 7).Value = dtpag
 End If
@@ -213,3 +344,12 @@ MsgBox "Pagamento confirmado com sucesso!", vbInformation, "Confirmação"
 Unload Me
 
 End Sub
+
+
+
+
+Private Sub ValorParcial_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+Me.ValorParcial.Text = Format(Me.ValorParcial.Text, "#,##0.00")
+End Sub
+
+
